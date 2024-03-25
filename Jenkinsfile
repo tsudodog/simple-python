@@ -24,6 +24,7 @@ pipeline {
 
                 sh '''
                     echo "doing test stuff"
+                    cd app
                     python3 hello.py
                 '''
             }
@@ -35,6 +36,7 @@ pipeline {
 
                 sh '''
                     echo "doing test stuff"
+                    cd app
                     python3 hello.py --name=Tsudo
                 '''
             }
