@@ -27,6 +27,7 @@ pipeline {
                     cd app
                     python3 main.py
                 '''
+                app = docker.build('app')
             }
         }
 
@@ -40,13 +41,22 @@ pipeline {
                     python3 main.py --name=Tsudo
                 '''
             }
+        }
+        stage('Docker Build') {
+            steps {
+                script {
+                    app = docker.build('my-test-app')
                 }
+            }
+        }
         stage('Deliver') {
             steps {
-                echo 'Delivering'
-                sh '''
-                     echo "doing delivery stuff"
-                 '''
+                script {
+                    echo 'Delivering'
+                    docker.withRegistry('https://888974021974.dkr.ecr.us-east-1.amazonaws.com/tsudo-repository', 'ecr:us-east-1:aws-credentials')
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push('latest')
+                }
             }
         }
     }
