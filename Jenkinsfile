@@ -27,7 +27,6 @@ pipeline {
                     cd app
                     python3 main.py
                 '''
-                app = docker.build('app')
             }
         }
 
