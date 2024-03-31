@@ -44,6 +44,9 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
+                    sh '''
+                        which docker
+                    '''
                     app = docker.build('my-test-app')
                 }
             }
